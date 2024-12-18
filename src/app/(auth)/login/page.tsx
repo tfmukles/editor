@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Icons } from "@/components/ui/icons";
-import { AnimatePresence } from "framer-motion";
-import { signIn } from "next-auth/react";
-import Link from "next/link";
-import { useState } from "react";
-import LoginWithPassword from "./_components/login-with-password";
+import { useState } from 'react';
+
+import { AnimatePresence } from 'framer-motion';
+import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+
+import { Button } from '@/components/ui/button';
+import { CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Icons } from '@/components/ui/icons';
+
+import LoginWithPassword from './_components/login-with-password';
 
 export default function Login() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -28,31 +31,31 @@ export default function Login() {
             </CardTitle>
             <div className="space-y-2">
               <Button
-                type="button"
-                variant={"secondary"}
+                variant={'secondary'}
                 className="w-full border border-border"
-                onClick={() => signIn("github")}
+                onClick={() => signIn('github')}
+                type="button"
               >
                 <Icons.githubBlack className="size-5" />
                 <span className="ml-2 ">Login with GitHub</span>
               </Button>
               <Button
-                type="button"
-                variant={"secondary"}
+                variant={'secondary'}
                 className="w-full border-border border"
                 onClick={() => {
-                  signIn("google");
+                  signIn('google');
                 }}
+                type="button"
               >
                 <Icons.google className="size-5" />
                 <span className="ml-2">Login with Google</span>
               </Button>
 
               <Button
+                variant={'secondary'}
+                className="w-full border border-border"
                 onClick={toggleForm}
                 type="button"
-                variant={"secondary"}
-                className="w-full border border-border"
               >
                 <Icons.mail className="size-5" />
                 <span className="ml-2">Login with Email</span>
@@ -62,13 +65,13 @@ export default function Login() {
 
           <CardFooter className="block text-center">
             <p className="text-center mt-3 text-popover-foreground">
-              <span className="">Don't have an account?</span>{" "}
+              <span className="">Don't have an account?</span>{' '}
               <Button
                 asChild
-                variant={"link"}
+                variant={'link'}
                 className="text-text-dark p-0 h-auto underline underline-offset-4"
               >
-                <Link href={"/register"} className="text-accent-foreground">
+                <Link className="text-accent-foreground" href={'/register'}>
                   Create an account
                 </Link>
               </Button>
