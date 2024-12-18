@@ -13,11 +13,8 @@ import {
   useSelectionFragmentProp,
 } from '@udecode/plate-common/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
-import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
-import { TogglePlugin } from '@udecode/plate-toggle/react';
+import { ListStyleType } from '@udecode/plate-indent-list';
 import {
-  ChevronRightIcon,
-  Columns3Icon,
   FileCodeIcon,
   Heading1Icon,
   Heading2Icon,
@@ -26,7 +23,6 @@ import {
   ListOrderedIcon,
   PilcrowIcon,
   QuoteIcon,
-  SquareIcon,
 } from 'lucide-react';
 
 import {
@@ -82,18 +78,6 @@ const turnIntoItems = [
     value: ListStyleType.Decimal,
   },
   {
-    icon: <SquareIcon />,
-    keywords: ['checklist', 'task', 'checkbox', '[]'],
-    label: 'To-do list',
-    value: INDENT_LIST_KEYS.todo,
-  },
-  {
-    icon: <ChevronRightIcon />,
-    keywords: ['collapsible', 'expandable'],
-    label: 'Toggle list',
-    value: TogglePlugin.key,
-  },
-  {
     icon: <FileCodeIcon />,
     keywords: ['```'],
     label: 'Code',
@@ -104,11 +88,6 @@ const turnIntoItems = [
     keywords: ['citation', 'blockquote', '>'],
     label: 'Quote',
     value: BlockquotePlugin.key,
-  },
-  {
-    icon: <Columns3Icon />,
-    label: '3 columns',
-    value: 'action_three_columns',
   },
 ];
 

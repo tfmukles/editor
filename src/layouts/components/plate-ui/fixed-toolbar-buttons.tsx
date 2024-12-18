@@ -4,30 +4,19 @@ import {
   BoldPlugin,
   CodePlugin,
   ItalicPlugin,
-  StrikethroughPlugin,
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
 import { useEditorReadOnly } from '@udecode/plate-common/react';
-import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { ListStyleType } from '@udecode/plate-indent-list';
-import {
-  AudioPlugin,
-  FilePlugin,
-  ImagePlugin,
-  VideoPlugin,
-} from '@udecode/plate-media/react';
+import { ImagePlugin } from '@udecode/plate-media/react';
 import {
   ArrowUpToLineIcon,
   BoldIcon,
   Code2Icon,
-  HighlighterIcon,
   ItalicIcon,
-  StrikethroughIcon,
   UnderlineIcon,
   WandSparklesIcon,
 } from 'lucide-react';
-
-import { MoreDropdownMenu } from '@/layouts/components/plate-ui/more-dropdown-menu';
 
 import { AIToolbarButton } from './ai-toolbar-button';
 import { AlignDropdownMenu } from './align-dropdown-menu';
@@ -35,15 +24,10 @@ import { ExportToolbarButton } from './export-toolbar-button';
 import { RedoToolbarButton, UndoToolbarButton } from './history-toolbar-button';
 import { IndentListToolbarButton } from './indent-list-toolbar-button';
 import { IndentTodoToolbarButton } from './indent-todo-toolbar-button';
-import { IndentToolbarButton } from './indent-toolbar-button';
 import { InsertDropdownMenu } from './insert-dropdown-menu';
-import { LineHeightDropdownMenu } from './line-height-dropdown-menu';
 import { LinkToolbarButton } from './link-toolbar-button';
 import { MarkToolbarButton } from './mark-toolbar-button';
 import { MediaToolbarButton } from './media-toolbar-button';
-import { ModeDropdownMenu } from './mode-dropdown-menu';
-import { OutdentToolbarButton } from './outdent-toolbar-button';
-import { TableDropdownMenu } from './table-dropdown-menu';
 import { ToggleToolbarButton } from './toggle-toolbar-button';
 import { ToolbarGroup } from './toolbar';
 import { TurnIntoDropdownMenu } from './turn-into-dropdown-menu';
@@ -96,13 +80,6 @@ export function FixedToolbarButtons() {
               <UnderlineIcon />
             </MarkToolbarButton>
 
-            <MarkToolbarButton
-              nodeType={StrikethroughPlugin.key}
-              tooltip="Strikethrough (⌘+⇧+M)"
-            >
-              <StrikethroughIcon />
-            </MarkToolbarButton>
-
             <MarkToolbarButton nodeType={CodePlugin.key} tooltip="Code (⌘+E)">
               <Code2Icon />
             </MarkToolbarButton>
@@ -119,39 +96,15 @@ export function FixedToolbarButtons() {
 
           <ToolbarGroup>
             <LinkToolbarButton />
-            <TableDropdownMenu />
           </ToolbarGroup>
 
           <ToolbarGroup>
             <MediaToolbarButton nodeType={ImagePlugin.key} />
-            <MediaToolbarButton nodeType={VideoPlugin.key} />
-            <MediaToolbarButton nodeType={AudioPlugin.key} />
-            <MediaToolbarButton nodeType={FilePlugin.key} />
           </ToolbarGroup>
 
-          <ToolbarGroup>
-            <LineHeightDropdownMenu />
-            <OutdentToolbarButton />
-            <IndentToolbarButton />
-          </ToolbarGroup>
-
-          <ToolbarGroup>
-            <MoreDropdownMenu />
-          </ToolbarGroup>
+          <ToolbarGroup></ToolbarGroup>
         </>
       )}
-
-      <div className="grow" />
-
-      <ToolbarGroup>
-        <MarkToolbarButton nodeType={HighlightPlugin.key} tooltip="Highlight">
-          <HighlighterIcon />
-        </MarkToolbarButton>
-      </ToolbarGroup>
-
-      <ToolbarGroup>
-        <ModeDropdownMenu />
-      </ToolbarGroup>
     </div>
   );
 }
