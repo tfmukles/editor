@@ -43,7 +43,11 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["./*"],
-      "@/components": ["./components/*"]
+      "@/components/*": ["./layouts/components/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/helpers/*": ["./layouts/helpers/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/partials/*": ["./layouts/partials/*"]
     },
     "plugins": [
       {

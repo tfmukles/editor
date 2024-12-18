@@ -1,0 +1,19 @@
+// define font size into tailwind.config.js
+
+// default colors
+:root {
+  --body-color: 0 0% 100%;
+  --primary-color: 222 47% 11%; // slate-900
+  --light-color: 210 40% 98%; // slate-50
+  --dark-color: 0 0% 0%;
+  --danger-color: 0 72% 51%;
+  --success-color: 139 70% 46%;
+
+  --accent-color: 220 13% 91%;
+  --muted-color: 210 40% 96%; // slate-100
+  --border-color: 213 27 84%; // slate-300
+  --text-primary-color: 222 47% 11%; // slate-900
+  --text-default-color: 215 19% 35%; // slate-600
+  --text-light-color: 0 0% 100%; // white
+  --text-dark-color: 0 0% 0%; //black
+}

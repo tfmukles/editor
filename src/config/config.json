@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "Sitepins",
+    "favicon": "/images/favicon.png",
+    "logo": "",
+    "logo_darkmode": "",
+    "logo_width": "150",
+    "logo_height": "27",
+    "logo_text": "Sitepins"
+  },
+  "posthog": {
+    "enable": true,
+    "disabled_countries": ["Bangladesh", "India", "Pakistan"]
+  },
+  "pagination": {
+    "limit": 20
+  }
+}

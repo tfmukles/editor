@@ -1,0 +1,102 @@
+// section style
+.section {
+  @apply py-24 xl:py-28;
+  &-sm {
+    @apply py-16 xl:py-20;
+  }
+}
+
+.wrapper table {
+  @apply max-w-full w-full border border-spacing-0	border-collapse border-hidden;
+
+  tr {
+    @apply p-2.5 border border-border;
+  }
+}
+
+.tree {
+  --spacing: 1.5rem;
+  --radius: 10px;
+}
+
+.tree li {
+  display: block;
+  position: relative;
+}
+
+.tree ul {
+  margin-left: 10px;
+  padding-left: 0;
+}
+
+.tree ul li {
+  @apply border-l border-border;
+}
+
+.tree ul li:last-child {
+  border-color: transparent;
+}
+
+.tree ul li::before {
+  content: "";
+  @apply border-border;
+  display: block;
+  position: absolute;
+  top: calc(var(--spacing) / -4);
+  left: -1px;
+  width: 9px;
+  height: calc(var(--spacing) + 1px);
+  border-width: 0 0 1px 1px;
+  max-height: 74%;
+}
+
+.tree ul li > div {
+  margin-left: 18px;
+}
+
+.tree ul li > div a {
+  padding: 10px 12px;
+}
+
+.tree ul li > div ul {
+  margin-left: 21px;
+}
+
+// content style
+.content {
+  @apply prose max-w-none;
+  @apply prose-headings:mb-[.3em] prose-headings:mt-[.6em] prose-headings:text-primary prose-headings:leading-relaxed;
+  @apply prose-h1:text-h1-sm md:prose-h1:text-h1;
+  @apply prose-h2:text-h2-sm md:prose-h2:text-h2;
+  @apply prose-h3:text-h3-sm md:prose-h3:text-h3;
+  @apply prose-img:max-w-full prose-img:rounded;
+  @apply prose-hr:border-border;
+  @apply prose-p:text-primary;
+  @apply prose-blockquote:border-l-4  prose-blockquote:border-border prose-blockquote:bg-background prose-blockquote:px-8 prose-blockquote:py-3 prose-blockquote:text-sm prose-blockquote:text-primary prose-blockquote:italic prose-blockquote:font-normal;
+  @apply prose-pre:rounded-lg prose-pre:bg-accent;
+  @apply prose-code:px-1 prose-code:text-primary;
+  @apply prose-strong:text-primary;
+  @apply prose-a:text-primary prose-a:underline hover:prose-a:text-primary;
+  @apply prose-li:text-primary;
+  @apply prose-table:relative prose-table:overflow-hidden prose-table:rounded-lg prose-table:before:absolute prose-table:before:left-0 prose-table:before:top-0 prose-table:before:h-full prose-table:before:w-full prose-table:before:rounded-[inherit] prose-table:before:border prose-table:before:content-[""];
+  @apply prose-thead:border-border prose-thead:bg-accent;
+  @apply prose-th:relative prose-th:z-10 prose-th:px-4 prose-th:py-[18px] prose-th:text-primary;
+  @apply prose-tr:border-border;
+  @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px];
+}
+
+// bg colors
+.bg-stripes-gray {
+  background-color: #9ca3af1a;
+  background-image: linear-gradient(
+    135deg,
+    #6b728080 10%,
+    #0000 0,
+    #0000 50%,
+    #6b728080 0,
+    #6b728080 60%,
+    #0000 0,
+    #0000
+  );
+  background-size: 7.07px 7.07px;
+}
