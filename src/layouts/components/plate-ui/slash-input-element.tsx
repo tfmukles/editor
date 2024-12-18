@@ -7,14 +7,12 @@ import { AIChatPlugin } from '@udecode/plate-ai/react';
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
 import { ParagraphPlugin, type PlateEditor } from '@udecode/plate-common/react';
-import { DatePlugin } from '@udecode/plate-date/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
 import { TablePlugin } from '@udecode/plate-table/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
-  CalendarIcon,
   ChevronRightIcon,
   Code2,
   Columns3Icon,
@@ -31,10 +29,7 @@ import {
   TableOfContentsIcon,
 } from 'lucide-react';
 
-import {
-  insertBlock,
-  insertInlineElement,
-} from '@/layouts/components/editor/transforms';
+import { insertBlock } from '@/layouts/components/editor/transforms';
 
 import {
   InlineCombobox,
@@ -171,23 +166,6 @@ const groups: Group[] = [
       ...item,
       onSelect: (editor, value) => {
         insertBlock(editor, value);
-      },
-    })),
-  },
-  {
-    group: 'Inline',
-    items: [
-      {
-        focusEditor: true,
-        icon: <CalendarIcon />,
-        keywords: ['time'],
-        label: 'Date',
-        value: DatePlugin.key,
-      },
-    ].map((item) => ({
-      ...item,
-      onSelect: (editor, value) => {
-        insertInlineElement(editor, value);
       },
     })),
   },

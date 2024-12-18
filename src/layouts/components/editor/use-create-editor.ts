@@ -15,16 +15,12 @@ import {
   CodeLinePlugin,
   CodeSyntaxPlugin,
 } from '@udecode/plate-code-block/react';
-import { CommentsPlugin } from '@udecode/plate-comments/react';
 import {
   ParagraphPlugin,
   PlateElement,
   PlateLeaf,
   usePlateEditor,
 } from '@udecode/plate-common/react';
-import { DatePlugin } from '@udecode/plate-date/react';
-import { EmojiInputPlugin } from '@udecode/plate-emoji/react';
-import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
@@ -38,10 +34,6 @@ import {
   NumberedListPlugin,
 } from '@udecode/plate-list/react';
 import { ImagePlugin, MediaEmbedPlugin } from '@udecode/plate-media/react';
-import {
-  MentionInputPlugin,
-  MentionPlugin,
-} from '@udecode/plate-mention/react';
 import { SlashInputPlugin } from '@udecode/plate-slash-command/react';
 import {
   TableCellHeaderPlugin,
@@ -62,10 +54,6 @@ import { CodeLineElement } from '@/layouts/components/plate-ui/code-line-element
 import { CodeSyntaxLeaf } from '@/layouts/components/plate-ui/code-syntax-leaf';
 import { ColumnElement } from '@/layouts/components/plate-ui/column-element';
 import { ColumnGroupElement } from '@/layouts/components/plate-ui/column-group-element';
-import { CommentLeaf } from '@/layouts/components/plate-ui/comment-leaf';
-import { DateElement } from '@/layouts/components/plate-ui/date-element';
-import { EmojiInputElement } from '@/layouts/components/plate-ui/emoji-input-element';
-import { ExcalidrawElement } from '@/layouts/components/plate-ui/excalidraw-element';
 import { HeadingElement } from '@/layouts/components/plate-ui/heading-element';
 import { HighlightLeaf } from '@/layouts/components/plate-ui/highlight-leaf';
 import { HrElement } from '@/layouts/components/plate-ui/hr-element';
@@ -74,8 +62,6 @@ import { KbdLeaf } from '@/layouts/components/plate-ui/kbd-leaf';
 import { LinkElement } from '@/layouts/components/plate-ui/link-element';
 import { ListElement } from '@/layouts/components/plate-ui/list-element';
 import { MediaEmbedElement } from '@/layouts/components/plate-ui/media-embed-element';
-import { MentionElement } from '@/layouts/components/plate-ui/mention-element';
-import { MentionInputElement } from '@/layouts/components/plate-ui/mention-input-element';
 import { ParagraphElement } from '@/layouts/components/plate-ui/paragraph-element';
 import { withPlaceholders } from '@/layouts/components/plate-ui/placeholder';
 import { SlashInputElement } from '@/layouts/components/plate-ui/slash-input-element';
@@ -106,10 +92,6 @@ export const useCreateEditor = () => {
           [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
           [ColumnItemPlugin.key]: ColumnElement,
           [ColumnPlugin.key]: ColumnGroupElement,
-          [CommentsPlugin.key]: CommentLeaf,
-          [DatePlugin.key]: DateElement,
-          [EmojiInputPlugin.key]: EmojiInputElement,
-          [ExcalidrawPlugin.key]: ExcalidrawElement,
           [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
           [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
           [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
@@ -124,8 +106,6 @@ export const useCreateEditor = () => {
           [LinkPlugin.key]: LinkElement,
           [ListItemPlugin.key]: withProps(PlateElement, { as: 'li' }),
           [MediaEmbedPlugin.key]: MediaEmbedElement,
-          [MentionInputPlugin.key]: MentionInputElement,
-          [MentionPlugin.key]: MentionElement,
           [NumberedListPlugin.key]: withProps(ListElement, { variant: 'ol' }),
           [ParagraphPlugin.key]: ParagraphElement,
           [SlashInputPlugin.key]: SlashInputElement,

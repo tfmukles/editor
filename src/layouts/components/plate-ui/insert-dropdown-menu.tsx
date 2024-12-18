@@ -12,8 +12,6 @@ import {
   useEditorRef,
   type PlateEditor,
 } from '@udecode/plate-common/react';
-import { DatePlugin } from '@udecode/plate-date/react';
-import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
@@ -23,7 +21,6 @@ import { ImagePlugin, MediaEmbedPlugin } from '@udecode/plate-media/react';
 import { TablePlugin } from '@udecode/plate-table/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 import {
-  CalendarIcon,
   ChevronRightIcon,
   Columns3Icon,
   FileCodeIcon,
@@ -36,7 +33,6 @@ import {
   ListIcon,
   ListOrderedIcon,
   MinusIcon,
-  PenToolIcon,
   PilcrowIcon,
   PlusIcon,
   QuoteIcon,
@@ -167,11 +163,6 @@ const groups: Group[] = [
         label: 'Embed',
         value: MediaEmbedPlugin.key,
       },
-      {
-        icon: <PenToolIcon />,
-        label: 'Excalidraw',
-        value: ExcalidrawPlugin.key,
-      },
     ].map((item) => ({
       ...item,
       onSelect: (editor, value) => {
@@ -206,12 +197,6 @@ const groups: Group[] = [
         icon: <Link2Icon />,
         label: 'Link',
         value: LinkPlugin.key,
-      },
-      {
-        focusEditor: true,
-        icon: <CalendarIcon />,
-        label: 'Date',
-        value: DatePlugin.key,
       },
     ].map((item) => ({
       ...item,

@@ -1,15 +1,7 @@
 'use client';
 
-import { CalloutPlugin } from '@udecode/plate-callout/react';
 import { ParagraphPlugin } from '@udecode/plate-common/react';
-import { DatePlugin } from '@udecode/plate-date/react';
 import { DocxPlugin } from '@udecode/plate-docx';
-import { EmojiPlugin } from '@udecode/plate-emoji/react';
-import {
-  FontBackgroundColorPlugin,
-  FontColorPlugin,
-  FontSizePlugin,
-} from '@udecode/plate-font/react';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
 import { JuicePlugin } from '@udecode/plate-juice';
@@ -33,7 +25,6 @@ import { alignPlugin } from './align-plugin';
 import { autoformatPlugin } from './autoformat-plugin';
 import { basicNodesPlugins } from './basic-nodes-plugins';
 import { blockMenuPlugins } from './block-menu-plugins';
-import { commentsPlugin } from './comments-plugin';
 import { cursorOverlayPlugin } from './cursor-overlay-plugin';
 import { deletePlugins } from './delete-plugins';
 import { dndPlugins } from './dnd-plugins';
@@ -42,7 +33,6 @@ import { indentListPlugins } from './indent-list-plugins';
 import { lineHeightPlugin } from './line-height-plugin';
 import { linkPlugin } from './link-plugin';
 import { mediaPlugins } from './media-plugins';
-import { mentionPlugin } from './mention-plugin';
 import { resetBlockTypePlugin } from './reset-block-type-plugin';
 import { softBreakPlugin } from './soft-break-plugin';
 import { tablePlugin } from './table-plugin';
@@ -52,21 +42,15 @@ export const viewPlugins = [
   ...basicNodesPlugins,
   HorizontalRulePlugin,
   linkPlugin,
-  DatePlugin,
-  mentionPlugin,
   tablePlugin,
   TogglePlugin,
   tocPlugin,
   ...mediaPlugins,
   InlineEquationPlugin,
   EquationPlugin,
-  CalloutPlugin,
   ColumnPlugin,
 
   // Marks
-  FontColorPlugin,
-  FontBackgroundColorPlugin,
-  FontSizePlugin,
   HighlightPlugin,
   KbdPlugin,
 
@@ -74,9 +58,6 @@ export const viewPlugins = [
   alignPlugin,
   ...indentListPlugins,
   lineHeightPlugin,
-
-  // Collaboration
-  commentsPlugin,
 ] as const;
 
 export const editorPlugins = [
@@ -92,7 +73,6 @@ export const editorPlugins = [
   cursorOverlayPlugin,
   ...blockMenuPlugins,
   ...dndPlugins,
-  EmojiPlugin,
   exitBreakPlugin,
   resetBlockTypePlugin,
   ...deletePlugins,

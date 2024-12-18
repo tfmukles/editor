@@ -8,10 +8,6 @@ import {
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
 import { useEditorReadOnly } from '@udecode/plate-common/react';
-import {
-  FontBackgroundColorPlugin,
-  FontColorPlugin,
-} from '@udecode/plate-font/react';
 import { HighlightPlugin } from '@udecode/plate-highlight/react';
 import { ListStyleType } from '@udecode/plate-indent-list';
 import {
@@ -22,12 +18,10 @@ import {
 } from '@udecode/plate-media/react';
 import {
   ArrowUpToLineIcon,
-  BaselineIcon,
   BoldIcon,
   Code2Icon,
   HighlighterIcon,
   ItalicIcon,
-  PaintBucketIcon,
   StrikethroughIcon,
   UnderlineIcon,
   WandSparklesIcon,
@@ -37,9 +31,6 @@ import { MoreDropdownMenu } from '@/layouts/components/plate-ui/more-dropdown-me
 
 import { AIToolbarButton } from './ai-toolbar-button';
 import { AlignDropdownMenu } from './align-dropdown-menu';
-import { ColorDropdownMenu } from './color-dropdown-menu';
-import { CommentToolbarButton } from './comment-toolbar-button';
-import { EmojiDropdownMenu } from './emoji-dropdown-menu';
 import { ExportToolbarButton } from './export-toolbar-button';
 import { RedoToolbarButton, UndoToolbarButton } from './history-toolbar-button';
 import { IndentListToolbarButton } from './indent-list-toolbar-button';
@@ -115,20 +106,6 @@ export function FixedToolbarButtons() {
             <MarkToolbarButton nodeType={CodePlugin.key} tooltip="Code (⌘+E)">
               <Code2Icon />
             </MarkToolbarButton>
-
-            <ColorDropdownMenu
-              nodeType={FontColorPlugin.key}
-              tooltip="Text color"
-            >
-              <BaselineIcon />
-            </ColorDropdownMenu>
-
-            <ColorDropdownMenu
-              nodeType={FontBackgroundColorPlugin.key}
-              tooltip="Background color"
-            >
-              <PaintBucketIcon />
-            </ColorDropdownMenu>
           </ToolbarGroup>
 
           <ToolbarGroup>
@@ -143,7 +120,6 @@ export function FixedToolbarButtons() {
           <ToolbarGroup>
             <LinkToolbarButton />
             <TableDropdownMenu />
-            <EmojiDropdownMenu />
           </ToolbarGroup>
 
           <ToolbarGroup>
@@ -171,7 +147,6 @@ export function FixedToolbarButtons() {
         <MarkToolbarButton nodeType={HighlightPlugin.key} tooltip="Highlight">
           <HighlighterIcon />
         </MarkToolbarButton>
-        <CommentToolbarButton />
       </ToolbarGroup>
 
       <ToolbarGroup>

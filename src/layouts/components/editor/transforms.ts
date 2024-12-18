@@ -2,13 +2,9 @@
 
 import type { PlateEditor } from '@udecode/plate-common/react';
 
-import { insertCallout } from '@udecode/plate-callout';
-import { CalloutPlugin } from '@udecode/plate-callout/react';
 import { insertCodeBlock } from '@udecode/plate-code-block';
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react';
 import {
-  type TElement,
-  type TNodeEntry,
   getBlockAbove,
   getBlocks,
   getNodeEntry,
@@ -17,9 +13,9 @@ import {
   setNodes,
   unsetNodes,
   withoutNormalizing,
+  type TElement,
+  type TNodeEntry,
 } from '@udecode/plate-common';
-import { insertDate } from '@udecode/plate-date';
-import { DatePlugin } from '@udecode/plate-date/react';
 import { insertToc } from '@udecode/plate-heading';
 import { TocPlugin } from '@udecode/plate-heading/react';
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list';
@@ -68,7 +64,6 @@ const insertBlockMap: Record<
     insertColumnGroup(editor, { layout: 3, select: true }),
   [AudioPlugin.key]: (editor) =>
     insertAudioPlaceholder(editor, { select: true }),
-  [CalloutPlugin.key]: (editor) => insertCallout(editor, { select: true }),
   [CodeBlockPlugin.key]: (editor) => insertCodeBlock(editor, { select: true }),
   [EquationPlugin.key]: (editor) => insertEquation(editor, { select: true }),
   [FilePlugin.key]: (editor) => insertFilePlaceholder(editor, { select: true }),
@@ -95,7 +90,6 @@ const insertInlineMap: Record<
   string,
   (editor: PlateEditor, type: string) => void
 > = {
-  [DatePlugin.key]: (editor) => insertDate(editor, { select: true }),
   [InlineEquationPlugin.key]: (editor) =>
     insertInlineEquation(editor, '', { select: true }),
   [LinkPlugin.key]: (editor) => triggerFloatingLink(editor, { focused: true }),

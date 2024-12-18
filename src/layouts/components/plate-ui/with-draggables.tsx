@@ -9,10 +9,9 @@ import {
   createNodesWithHOC,
 } from '@udecode/plate-common/react';
 import {
-  type WithDraggableOptions,
   withDraggable as withDraggablePrimitive,
+  type WithDraggableOptions,
 } from '@udecode/plate-dnd';
-import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react';
 import { HEADING_KEYS } from '@udecode/plate-heading';
 import { ColumnPlugin } from '@udecode/plate-layout/react';
 import {
@@ -23,7 +22,7 @@ import {
 import { TablePlugin } from '@udecode/plate-table/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 
-import { type DraggableProps, Draggable } from './draggable';
+import { Draggable, type DraggableProps } from './draggable';
 
 export const withDraggable = (
   Component: FC,
@@ -104,13 +103,6 @@ export const withDraggables = (components: any) => {
     },
     {
       key: MediaEmbedPlugin.key,
-      draggableProps: {
-        className:
-          '[&_.slate-gutterLeft]:pt-0 [&_.slate-gutterLeft]:px-0 [&_.slate-gutterLeft]:pb-0',
-      },
-    },
-    {
-      key: ExcalidrawPlugin.key,
       draggableProps: {
         className:
           '[&_.slate-gutterLeft]:pt-0 [&_.slate-gutterLeft]:px-0 [&_.slate-gutterLeft]:pb-0',
