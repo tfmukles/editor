@@ -15,6 +15,7 @@ import {
   CodeLinePlugin,
   CodeSyntaxPlugin,
 } from '@udecode/plate-code-block/react';
+import { TElement } from '@udecode/plate-common';
 import {
   ParagraphPlugin,
   PlateElement,
@@ -77,7 +78,7 @@ import { withDraggables } from '@/layouts/components/plate-ui/with-draggables';
 
 import { FixedToolbarPlugin } from './plugins/fixed-toolbar-plugin';
 
-export const useCreateEditor = () => {
+export const useCreateEditor = ({ value }: { value: TElement[] }) => {
   return usePlateEditor({
     override: {
       components: withDraggables(
@@ -128,21 +129,6 @@ export const useCreateEditor = () => {
       FixedToolbarPlugin,
       FloatingToolbarPlugin,
     ],
-    value: [
-      {
-        children: [{ text: 'Playground' }],
-        type: 'h1',
-      },
-      {
-        children: [
-          { text: 'A rich-text editor with AI capabilities. Try the ' },
-          { bold: true, text: 'AI commands' },
-          { text: ' or use ' },
-          { kbd: true, text: 'Cmd+J' },
-          { text: ' to open the AI menu.' },
-        ],
-        type: ParagraphPlugin.key,
-      },
-    ],
+    value,
   });
 };

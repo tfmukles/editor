@@ -22,6 +22,7 @@
     "@octokit/rest": "^21.0.2",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.2",
+    "@radix-ui/react-aspect-ratio": "^1.1.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-context-menu": "^2.2.2",
@@ -105,6 +106,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
     "react-gravatar": "^2.6.3",
     "react-hook-form": "^7.54.1",
     "react-lite-youtube-embed": "^2.4.0",
@@ -124,6 +126,7 @@
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "7.2.0",
     "use-file-picker": "^2.1.2",
+    "validate-color": "^2.2.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {

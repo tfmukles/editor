@@ -273,6 +273,7 @@ module.exports = {
       'sort-imports': 'off',
       'sort-keys': 'off',
     },
+    '@next/next/no-img-element': 'off',
   },
   settings: {
     next: {

@@ -11,7 +11,7 @@ import {
   ErrorMessage,
   InvalidMarkdownElement,
   buildError,
-} from './_components/error-message';
+} from './error-message';
 
 export const uuid = () => {
   // @ts-ignore

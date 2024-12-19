@@ -19,16 +19,13 @@ import {
 } from 'lucide-react';
 
 import { AIToolbarButton } from './ai-toolbar-button';
-import { AlignDropdownMenu } from './align-dropdown-menu';
 import { ExportToolbarButton } from './export-toolbar-button';
 import { RedoToolbarButton, UndoToolbarButton } from './history-toolbar-button';
 import { IndentListToolbarButton } from './indent-list-toolbar-button';
-import { IndentTodoToolbarButton } from './indent-todo-toolbar-button';
 import { InsertDropdownMenu } from './insert-dropdown-menu';
 import { LinkToolbarButton } from './link-toolbar-button';
 import { MarkToolbarButton } from './mark-toolbar-button';
 import { MediaToolbarButton } from './media-toolbar-button';
-import { ToggleToolbarButton } from './toggle-toolbar-button';
 import { ToolbarGroup } from './toolbar';
 import { TurnIntoDropdownMenu } from './turn-into-dropdown-menu';
 
@@ -86,12 +83,8 @@ export function FixedToolbarButtons() {
           </ToolbarGroup>
 
           <ToolbarGroup>
-            <AlignDropdownMenu />
-
             <IndentListToolbarButton nodeType={ListStyleType.Disc} />
             <IndentListToolbarButton nodeType={ListStyleType.Decimal} />
-            <IndentTodoToolbarButton />
-            <ToggleToolbarButton />
           </ToolbarGroup>
 
           <ToolbarGroup>

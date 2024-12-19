@@ -1,113 +1,115 @@
-"use client";
+'use client';
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import toml from '@iarna/toml';
+import { parseMDX, stringifyMDX } from '@tinacms/mdx';
+import { cn } from '@udecode/cn';
+import { ArrowLeft, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import path from 'path';
+
+import TextEditor from '@/app/editor/text-editor';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import Editor from "@/editor/editor";
-import RawEditor from "@/editor/rich-text";
-import { useToast } from "@/hooks/use-toast";
-import { useDebounce } from "@/hooks/useDebounce";
-import { State } from "@/lib/context/type";
-import { contentFormatter, format } from "@/lib/utils/contentFormatter";
-import { selectConfig } from "@/redux/features/config/slice";
-import { useUpdateFilesMutation } from "@/redux/features/git/commitApi";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { useDebounce } from '@/hooks/useDebounce';
+import { State } from '@/lib/context/type';
+import { contentFormatter, format } from '@/lib/utils/contentFormatter';
+import { selectConfig } from '@/redux/features/config/slice';
+import { useUpdateFilesMutation } from '@/redux/features/git/commitApi';
 import {
   contentApi,
   useGetDeployStatusQuery,
-} from "@/redux/features/git/contentApi";
-import { githubApi } from "@/redux/features/git/gitApi";
-import { useAppDispatch } from "@/redux/store";
-import toml from "@iarna/toml";
-import { parseMDX, stringifyMDX } from "@tinacms/mdx";
-import { cn } from "@udecode/cn";
-import { ArrowLeft, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import path from "path";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import PreviewData from "./preview-data";
+} from '@/redux/features/git/contentApi';
+import { githubApi } from '@/redux/features/git/gitApi';
+import { useAppDispatch } from '@/redux/store';
+
+import PreviewData from './preview-data';
 
 interface CommitDetails {
-  message: string;
-  description: string;
   createPullRequest: boolean;
+  description: string;
+  message: string;
 }
 
 interface CommitModalProps {
+  branch: string;
+  isLoading: boolean;
   isOpen: boolean;
   onClose: () => void;
   onCommit: (details: CommitDetails) => void;
-  isLoading: boolean;
-  branch: string;
 }
 
 type Field = {
-  label: string;
   type:
-    | "media"
-    | "gallery"
-    | "number"
-    | "Date"
-    | "string"
-    | "Array"
-    | "object"
-    | "boolean";
+    | 'Array'
+    | 'Date'
+    | 'boolean'
+    | 'gallery'
+    | 'media'
+    | 'number'
+    | 'object'
+    | 'string';
+  label: string;
   name: string;
   value: string;
-  fields?: Field[];
   description?: string;
+  fields?: Field[];
   isIgnored?: boolean;
   isRequired?: boolean;
 };
 
 interface EditorWrapperProps {
-  data: Record<string, any>;
   content: string;
-  schema: Field[];
+  data: Record<string, any>;
   filePath: string;
   fmType: format;
+  schema: Field[];
   shouldShowEditor?: boolean;
 }
 
 interface CommitData {
-  path: string;
   content: string;
+  path: string;
 }
 
 // CommitModal Component
 const CommitModal: React.FC<CommitModalProps> = ({
+  branch,
+  isLoading,
   isOpen,
   onClose,
   onCommit,
-  isLoading,
-  branch,
 }) => {
-  const [message, setMessage] = useState("");
-  const [description, setDescription] = useState("");
-  const [commitType, setCommitType] = useState<"main" | "pr">("main");
+  const [message, setMessage] = useState('');
+  const [description, setDescription] = useState('');
+  const [commitType] = useState<'main' | 'pr'>('main');
 
   const handleCommit = () => {
     onCommit({
-      message,
+      createPullRequest: commitType === 'pr',
       description,
-      createPullRequest: commitType === "pr",
+      message,
     });
   };
 
   useEffect(() => {
     if (!isLoading) {
       onClose();
-      setMessage("");
-      setDescription("");
+      setMessage('');
+      setDescription('');
     }
   }, [isLoading]);
 
@@ -127,10 +129,10 @@ const CommitModal: React.FC<CommitModalProps> = ({
             </Label>
             <Input
               id="commit-message"
+              required
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Enter a descriptive commit message"
-              required
             />
           </div>
           <div className="space-y-2">
@@ -142,48 +144,16 @@ const CommitModal: React.FC<CommitModalProps> = ({
               placeholder="Add an optional extended description.."
             />
           </div>
-          {/* <RadioGroup
-            value={commitType}
-            onValueChange={(value: "main" | "pr") => setCommitType(value)}
-            className="space-y-3"
-          >
-            <div className="flex items-center space-x-2 rounded-md">
-              <RadioGroupItem value="main" id="main" />
-              <Label htmlFor="main" className="flex-1 mb-0">
-                <div className="font-medium">
-                  Commit directly to the {branch} branch
-                </div>
-              </Label>
-            </div>
-            <div className="flex items-start space-x-2 rounded-md">
-              <RadioGroupItem value="pr" id="r2" />
-              <Label className="flex-1 mb-3" htmlFor="r2">
-                <div className="font-medium">
-                  Create a new branch for this commit and start a pull request
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  <a
-                    href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
-                    className="text-blue-500 hover:underline"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Learn more about pull requests
-                  </a>
-                </span>
-              </Label>
-            </div>
-          </RadioGroup> */}
         </div>
         <DialogFooter className="sm:justify-end">
-          <Button size="lg" type="button" variant="outline" onClick={onClose}>
+          <Button size="lg" variant="outline" onClick={onClose} type="button">
             Cancel
           </Button>
           <Button
-            onClick={handleCommit}
-            type="button"
             size="lg"
             disabled={isLoading || !message.trim()}
+            onClick={handleCommit}
+            type="button"
           >
             {isLoading ? (
               <>
@@ -191,7 +161,7 @@ const CommitModal: React.FC<CommitModalProps> = ({
                 <Loader2 className="size-5 animate-spin ml-2" />
               </>
             ) : (
-              "Commit changes"
+              'Commit changes'
             )}
           </Button>
         </DialogFooter>
@@ -202,11 +172,11 @@ const CommitModal: React.FC<CommitModalProps> = ({
 
 // EditorWrapper Component
 const EditorWrapper: React.FC<EditorWrapperProps> = ({
-  data,
   content,
-  schema,
+  data,
   filePath,
   fmType,
+  schema,
   shouldShowEditor = true,
 }) => {
   const config = useSelector(selectConfig);
@@ -219,15 +189,15 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
   const [showCommitModal, setShowCommitModal] = useState(false);
   const [commitData, setCommitData] = useState<CommitData | null>(null);
 
-  if (typeof window !== "undefined") {
-    document.querySelector("#main")?.classList.add("2xl:!px-0", "2xl:!py-0");
+  if (typeof window !== 'undefined') {
+    document.querySelector('#main')?.classList.add('2xl:!px-0', '2xl:!py-0');
   }
 
   useEffect(() => {
     return () => {
       document
-        .querySelector("#main")
-        ?.classList.remove("2xl:!px-0", "2xl:!py-0");
+        .querySelector('#main')
+        ?.classList.remove('2xl:!px-0', '2xl:!py-0');
     };
   }, []);
 
@@ -236,25 +206,25 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
   const storeRef = useRef<State | undefined>({
     data: JSON.parse(JSON.stringify(data)),
     images: [],
-    page_content: content ?? "",
+    page_content: content ?? '',
   });
 
   const [state, setState] = useState<State | undefined>({
     data,
     images: [],
-    page_content: content ?? "",
+    page_content: content ?? '',
   });
 
   const initialValue = useMemo(() => {
     return parseMDX(
       content,
       {
-        label: "rich text",
-        name: "templates",
-        type: "rich-text",
+        label: 'rich text',
+        name: 'templates',
         templates: [],
+        type: 'rich-text',
       },
-      (url: string) => url,
+      (url: string) => url
     );
   }, [JSON.stringify(storeRef.current)]);
 
@@ -266,17 +236,17 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     const mdxValue = stringifyMDX(
       value,
       {
-        label: "rich text",
-        name: "templates",
-        type: "rich-text",
+        label: 'rich text',
+        name: 'templates',
         templates: [],
+        type: 'rich-text',
       },
-      (url: string) => url,
+      (url: string) => url
     );
     // @ts-ignore
     setState((prev) => ({ ...prev, page_content: mdxValue }));
 
-    if (storeRef.current?.page_content.includes("\n")) {
+    if (storeRef.current?.page_content.includes('\n')) {
       storeRef.current = {
         ...storeRef.current,
         page_content: mdxValue!,
@@ -286,26 +256,26 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
 
   const prepareCommit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const draft = schema.find((item) => item.name === "draft");
-    const filetype = path.parse(filePath).ext.replace(".", "");
-    const isTomlFile = filetype === "";
+    const draft = schema.find((item) => item.name === 'draft');
+    const filetype = path.parse(filePath).ext.replace('.', '');
+    const isTomlFile = filetype === '';
 
     const data: CommitData = {
-      path: filePath,
       content: isTomlFile
         ? toml.stringify(
-            shouldShowEditor && draft?.type === "boolean"
+            shouldShowEditor && draft?.type === 'boolean'
               ? { ...state?.data!, draft: isDraft }
-              : state?.data!,
+              : state?.data!
           )
         : contentFormatter({
             data:
-              shouldShowEditor && draft?.type === "boolean"
+              shouldShowEditor && draft?.type === 'boolean'
                 ? { ...state?.data!, draft: isDraft }
                 : state?.data!,
-            page_content: state?.page_content!,
             format: fmType,
+            page_content: state?.page_content!,
           }),
+      path: filePath,
     };
 
     if (shouldCommitManual) {
@@ -315,11 +285,11 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
       updateFile({
         files: [
           {
-            path: data.path,
             content: data.content,
+            path: data.path,
           },
         ],
-        message: "Update file",
+        message: 'Update file',
         owner: config.userName,
         repo: config.repo,
         tree: config.branch,
@@ -328,26 +298,26 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
           storeRef.current = state;
           dispatch(
             contentApi.util.updateQueryData(
-              "getContent",
+              'getContent',
               {
-                path: filePath,
                 owner: config.userName,
-                repo: config.repo,
                 parser: true,
+                path: filePath,
                 ref: config.branch,
+                repo: config.repo,
               },
               (draft) => {
                 draft.data = { ...state?.data!, draft: isDraft };
                 draft.content = state?.page_content;
                 return draft;
-              },
-            ),
+              }
+            )
           );
           dispatch(
-            githubApi.util.invalidateTags([{ type: "commit", id: filePath }]),
+            githubApi.util.invalidateTags([{ id: filePath, type: 'commit' }])
           );
           toast({
-            title: "File updated successfully",
+            title: 'File updated successfully',
           });
           setShowCommitModal(false);
         }
@@ -358,42 +328,42 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
   const handleCommit = async (commitDetails: CommitDetails) => {
     if (!commitData) return;
     await updateFile({
+      description: commitDetails.description,
       files: [
         {
-          path: commitData.path,
           content: commitData.content,
+          path: commitData.path,
         },
       ],
+      message: commitDetails.message,
       owner: config.userName,
       repo: config.repo,
       tree: config.branch,
-      message: commitDetails.message,
-      description: commitDetails.description,
     }).then((res) => {
       if (!res.error?.message) {
         storeRef.current = state;
         dispatch(
           contentApi.util.updateQueryData(
-            "getContent",
+            'getContent',
             {
-              path: filePath,
               owner: config.userName,
-              repo: config.repo,
               parser: true,
+              path: filePath,
               ref: config.branch,
+              repo: config.repo,
             },
             (draft) => {
               draft.data = { ...state?.data!, draft: isDraft };
               draft.content = state?.page_content;
               return draft;
-            },
-          ),
+            }
+          )
         );
         dispatch(
-          githubApi.util.invalidateTags([{ type: "commit", id: filePath }]),
+          githubApi.util.invalidateTags([{ id: filePath, type: 'commit' }])
         );
         toast({
-          title: "File updated successfully",
+          title: 'File updated successfully',
         });
         setShowCommitModal(false);
       }
@@ -419,8 +389,8 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
 
   const { data: status } = useGetDeployStatusQuery({
     owner: config.userName,
-    repo: config.repo,
     ref: config.branch,
+    repo: config.repo,
   });
 
   const conclusion = status?.check_runs[0]?.conclusion;
@@ -429,23 +399,23 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
     <>
       <form
         ref={formRef}
-        onSubmit={prepareCommit}
         className={cn(
-          "p-8 lg:pt-0 xl:pt-8",
-          !shouldShowEditor && "2xl:px-14 px-5 pt-0",
+          'p-8 lg:pt-0 xl:pt-8',
+          !shouldShowEditor && '2xl:px-14 px-5 pt-0'
         )}
+        onSubmit={prepareCommit}
       >
         <div
           className={cn(
-            "py-2 bg-background sticky -top-8 2xl:top-0 left-0 mb-5 bg flex justify-between w-full z-50",
-            !shouldShowEditor && "mt-0",
+            'py-2 bg-background sticky -top-8 2xl:top-0 left-0 mb-5 bg flex justify-between w-full z-50',
+            !shouldShowEditor && 'mt-0'
           )}
         >
           <Button
-            onClick={() => router.back()}
             size="lg"
-            className="space-x-3 p-0"
             variant="basic"
+            className="space-x-3 p-0"
+            onClick={() => router.back()}
             type="button"
           >
             <ArrowLeft className="size-6" />
@@ -454,88 +424,77 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
           <div className="flex items-center space-x-4">
             {status?.total_count! > 0 && (
               <Badge
-                variant={"secondary"}
+                variant={'secondary'}
                 className="capitalize h-auto p-2 px-4"
               >
                 <span
                   className={cn(
-                    "size-2 rounded-full mr-1.5",
-                    conclusion === "success" && "bg-success",
-                    conclusion === "failure" && "bg-destructive",
+                    'size-2 rounded-full mr-1.5',
+                    conclusion === 'success' && 'bg-success',
+                    conclusion === 'failure' && 'bg-destructive'
                   )}
                 />
-                {conclusion === "success" ? "Build Success" : "Build Failed"}
+                {conclusion === 'success' ? 'Build Success' : 'Build Failed'}
               </Badge>
             )}
             <Button
               size="lg"
               variant="outline"
               className="w-40"
-              type="button"
               disabled={!isChanged}
               onClick={onReset}
+              type="button"
             >
               Reset
             </Button>
             {shouldShowEditor && (
               <Button
-                type="button"
                 size="lg"
                 disabled={isDraft || pending}
                 onClick={() => {
                   setIsDraft(true);
                   formRef?.current?.requestSubmit();
                 }}
+                type="button"
               >
                 Save as Draft
                 {pending && isDraft && (
-                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="ml-2 size-4 animate-spin" />
                 )}
               </Button>
             )}
             <Button
-              type="submit"
-              disabled={!isChanged || pending}
               size="lg"
               className="w-40"
+              disabled={!isChanged || pending}
               onClick={() => setIsDraft(false)}
+              type="submit"
             >
-              {isDraft ? "Save" : shouldShowEditor ? "Publish" : "Save"}
+              {isDraft ? 'Save' : shouldShowEditor ? 'Publish' : 'Save'}
               {pending && !isDraft && (
-                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                <Loader2 className="ml-2 size-4 animate-spin" />
               )}
             </Button>
           </div>
         </div>
 
-        <PreviewData schema={schema} data={state?.data!} setData={setState} />
+        <PreviewData data={state?.data!} schema={schema} setData={setState} />
         {shouldShowEditor && (
           <>
             <Label className="mt-4">Body</Label>
-            <div className="min-h-[250px] max-w-full content relative w-full border border-border rounded-lg 2xl:p-8 p-4 flex flex-col">
+            <div className="border border-border">
               {!isRawMode ? (
-                <Editor
-                  key={key ? "1" : "2"}
-                  // @ts-ignore
+                <TextEditor
+                  key={key ? '1' : '2'}
                   input={{
                     value: value,
-                    // @ts-ignore
                     onChange: (v) => {
                       setValue(v);
                     },
                   }}
                 />
               ) : (
-                <RawEditor
-                  key={key ? "1" : "2"}
-                  // @ts-ignore
-                  input={{
-                    value: value,
-                    onChange: (v) => {
-                      setValue(v);
-                    },
-                  }}
-                />
+                <></>
               )}
             </div>
           </>
@@ -543,11 +502,11 @@ const EditorWrapper: React.FC<EditorWrapperProps> = ({
       </form>
 
       <CommitModal
-        isOpen={showCommitModal}
         onClose={() => setShowCommitModal(false)}
         onCommit={handleCommit}
-        isLoading={pending}
         branch={branch}
+        isLoading={pending}
+        isOpen={showCommitModal}
       />
     </>
   );

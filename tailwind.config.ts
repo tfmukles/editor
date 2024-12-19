@@ -14,6 +14,7 @@ const config: Config = {
     './src/layouts/**/*.{js,ts,jsx,tsx}',
     './src/content/**/*.{md,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx}',
+    './src/editor/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: ['class', 'class'],
   plugins: [
@@ -58,9 +59,20 @@ const config: Config = {
         },
         background: 'hsl(var(--background))',
         border: 'hsl(var(--border))',
+        brand: {
+          DEFAULT: 'hsl(var(--brand))',
+          foreground: 'hsl(var(--brand-foreground))',
+        },
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
+        },
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
         },
         dark: 'hsl(var(--dark-color))',
         destructive: {
@@ -68,6 +80,10 @@ const config: Config = {
           foreground: 'hsl(var(--destructive-foreground))',
         },
         foreground: 'hsl(var(--foreground))',
+        highlight: {
+          DEFAULT: 'hsl(var(--highlight))',
+          foreground: 'hsl(var(--highlight-foreground))',
+        },
         input: 'hsl(var(--input))',
         light: 'hsl(var(--light-color))',
         muted: {
@@ -134,6 +150,9 @@ const config: Config = {
     screens: {
       '2xl': '1536px',
       lg: '1024px',
+      'main-hover': {
+        raw: '(hover: hover)',
+      },
       md: '768px',
       sm: '540px',
       xl: '1280px',
