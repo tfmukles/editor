@@ -44,12 +44,12 @@ import {
 } from '@udecode/plate-table/react';
 import { TogglePlugin } from '@udecode/plate-toggle/react';
 
+import { ComboboxDemo } from '@/app/editor/helpers';
 import { copilotPlugins } from '@/layouts/components/editor/plugins/copilot-plugins';
 import { editorPlugins } from '@/layouts/components/editor/plugins/editor-plugins';
 import { FloatingToolbarPlugin } from '@/layouts/components/editor/plugins/floating-toolbar-plugin';
 import { AILeaf } from '@/layouts/components/plate-ui/ai-leaf';
 import { BlockquoteElement } from '@/layouts/components/plate-ui/blockquote-element';
-import { CodeBlockElement } from '@/layouts/components/plate-ui/code-block-element';
 import { CodeLeaf } from '@/layouts/components/plate-ui/code-leaf';
 import { CodeLineElement } from '@/layouts/components/plate-ui/code-line-element';
 import { CodeSyntaxLeaf } from '@/layouts/components/plate-ui/code-syntax-leaf';
@@ -87,7 +87,7 @@ export const useCreateEditor = ({ value }: { value: TElement[] }) => {
           [BlockquotePlugin.key]: BlockquoteElement,
           [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
           [BulletedListPlugin.key]: withProps(ListElement, { variant: 'ul' }),
-          [CodeBlockPlugin.key]: CodeBlockElement,
+          [CodeBlockPlugin.key]: ComboboxDemo,
           [CodeLinePlugin.key]: CodeLineElement,
           [CodePlugin.key]: CodeLeaf,
           [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,

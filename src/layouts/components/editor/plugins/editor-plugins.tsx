@@ -79,7 +79,6 @@ export const editorPlugins = [
   softBreakPlugin,
   TrailingBlockPlugin.configure({ options: { type: ParagraphPlugin.key } }),
   ListPlugin,
-
   // Deserialization
   DocxPlugin,
   MarkdownPlugin.configure({ options: { indentList: true } }),

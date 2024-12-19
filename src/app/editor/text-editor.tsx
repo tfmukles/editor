@@ -32,13 +32,16 @@ export default function TextEditor(props: {
     []
   );
 
-  console.log({ initialValue });
-
   const editor = useCreateEditor({ value: initialValue });
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <Plate onValueChange={({ value }) => {}} editor={editor}>
+      <Plate
+        onValueChange={({ value }) => {
+          console.log(value);
+        }}
+        editor={editor}
+      >
         <EditorContainer>
           <Editor variant="fullWidth" />
         </EditorContainer>

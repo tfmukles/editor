@@ -1,29 +1,30 @@
-"use client";
+'use client';
 
-import { useInView } from "@/hooks/useInView";
-import { sanitizedPath } from "@/lib/utils/common";
-import { selectConfig } from "@/redux/features/config/slice";
-import { useGetImageQuery } from "@/redux/features/git/contentApi";
-import { useRef } from "react";
-import { useSelector } from "react-redux";
+import { useRef } from 'react';
+import { useSelector } from 'react-redux';
+
+import { useInView } from '@/hooks/useInView';
+import { sanitizedPath } from '@/lib/utils/common';
+import { selectConfig } from '@/redux/features/config/slice';
+import { useGetImageQuery } from '@/redux/features/git/contentApi';
 
 interface LoadImageProps {
+  children: ({
+    ref,
+    src,
+  }: {
+    isLoading: boolean;
+    ref: any;
+    src: string;
+  }) => React.ReactNode;
   path: string;
   className?: string;
-  children: ({
-    src,
-    ref,
-  }: {
-    src: string;
-    ref: any;
-    isLoading: boolean;
-  }) => React.ReactNode;
   lazy?: boolean;
 }
 
-const LoadImage = ({ path, children, lazy }: LoadImageProps) => {
-  const PLACEHOLDER_IMAGE = "/images/placeholder.png";
-  const FALLBACK_IMAGE = "/images/404.jpg";
+const LoadImage = ({ children, lazy, path }: LoadImageProps) => {
+  const PLACEHOLDER_IMAGE = '/images/placeholder.png';
+  const FALLBACK_IMAGE = '/images/404.jpg';
 
   const config = useSelector(selectConfig);
   const { branch } = config;
@@ -32,23 +33,23 @@ const LoadImage = ({ path, children, lazy }: LoadImageProps) => {
 
   const {
     data: image,
-    isLoading,
     error,
+    isLoading,
   } = useGetImageQuery(
     {
-      ref: branch,
       owner: config.userName,
-      repo: config.repo,
       path: `${sanitizedPath(config.media.public, path.split(config.media.public).pop()!)}`,
+      ref: branch,
+      repo: config.repo,
     },
     {
       skip: lazy ? !isInView : false,
-    },
+    }
   );
 
-  let src = "";
+  let src = '';
   if (isLoading) {
-    src = "";
+    src = '';
   }
 
   if (!isLoading && error) {
@@ -59,7 +60,7 @@ const LoadImage = ({ path, children, lazy }: LoadImageProps) => {
     src = image.download_url;
   }
 
-  return children({ src, ref: container, isLoading });
+  return children({ isLoading, ref: container, src });
 };
 
 export default LoadImage;

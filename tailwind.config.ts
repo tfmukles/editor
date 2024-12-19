@@ -11,12 +11,13 @@ let h1 = h2 * font_scale;
 
 const config: Config = {
   content: [
-    './src/layouts/**/*.{js,ts,jsx,tsx}',
-    './src/content/**/*.{md,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx}',
-    './src/editor/**/*.{js,ts,jsx,tsx}',
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/layouts/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/layouts/helpers/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: ['class', 'class'],
+  darkMode: ['class'],
   plugins: [
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
